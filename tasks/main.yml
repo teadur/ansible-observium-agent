@@ -1,2 +1,22 @@
 ---
 # tasks file for observium-agent
+- name: be sure xinetd is installed
+  apt:  pkg=xinetd state=installed
+  tags: xinetd
+  when: ansible_distribution == "Debian"
+
+- template: src=observium_agent_xinetd dest=/etc/xinetd.d/observium_agent_xinetd owner=root group=root mode=0644
+  notify: restart xinetd
+  tags:
+  - xinetd
+
+- name: enable xinetd
+  service: name=xinetd state=enabled
+  tags: xinetd
+
+- name: deploy observium agent script
+  copy: src=observium_agent dest=/usr/bin/observium_agent owner=root group=root mode=0655
+
+#- file: path=/usr/lib/observium_agent state=directory mode=0755
+- file: path=/usr/lib/observium_agent/local =directory mode=0755
+

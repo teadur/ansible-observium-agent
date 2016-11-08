@@ -1,2 +1,4 @@
 ---
 # handlers file for observium-agent
+- name: restart xinetd
+  service: name="xinetd" state=restarted
