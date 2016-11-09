@@ -17,6 +17,12 @@
 - name: deploy observium agent script
   template: src=observium_agent dest=/usr/bin/observium_agent owner=root group=root mode=0655
 
-#- file: path=/usr/lib/observium_agent state=directory mode=0755
+- name: deploy observium distro script
+  template: src=distro dest=/usr/bin/distro owner=root group=root mode=0655
+
+- lineinfile: dest=/etc/snmp/snmpd.conf line="#This line allows Observium to detect the host OS if the distro script is installed"
+- lineinfile: dest=/etc/snmp/snmpd.conf line="extend .1.3.6.1.4.1.2021.7890.1 distro /usr/bin/distro"  
+  notify: restart snmpd
+
 - file: path=/usr/lib/observium_agent/local state=directory mode=0755
 
