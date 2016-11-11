@@ -1,2 +1,10 @@
 ---
 # defaults file for observium-agent
+obs_agent_pg_user: pguser
+obs_agent_pg_pass: pgpass
+obs_agent_pg_db: pgdb
+obs_agent_pg_host: 127.0.0.1
+        
+        
+        
+        

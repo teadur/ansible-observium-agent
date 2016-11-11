@@ -26,7 +26,7 @@
 
 - file: path=/usr/lib/observium_agent/local state=directory mode=0755
 
-# TODO:  include only needed local agents via vaiables  
+# TODO:  include only needed local agents via variables  
 - template: src=local-agents/dpkg dest=/usr/lib/observium_agent/local/dpkg owner=root group=root mode=0655  
 
 # apache local agent
@@ -36,3 +36,25 @@
 - name: deploy apache mod_status configuration
   template: src=apache_status.conf dest=/etc/apache2/mods-enabled/status.conf owner=root group=root mode=0655  
 
+# postgresql local agent
+# TODO: separate task file
+- name: install postgres python deps
+  apt: pkg=python-psycopg2 state=installed
+
+- name: deploy postgresql local agent
+  template: src=local-agents/postgresql.conf dest=/usr/lib/observium_agent/local/postgresql.conf owner=root group=root mode=0600  
+
+- template: src=local-agents/postgresql.pl dest=/usr/lib/observium_agent/local/postgresql.pl owner=root group=root mode=0655  
+
+- name: Create a PostgreSQL database user
+  postgresql_user: name={{ obs_agent_pg_user }} password={{ obs_agent_pg_pass }} role_attr_flags=CREATEDB state=present
+  become: yes
+  become_user: postgres
+  become_method: sudo
+  
+- name: create db for observium user
+  postgresql_db: name={{ obs_agent_pg_db }} owner={{ obs_agent_pg_user }}
+  become: yes
+  become_user: postgres
+  become_method: sudo
+  
