@@ -26,5 +26,13 @@
 
 - file: path=/usr/lib/observium_agent/local state=directory mode=0755
 
+# TODO:  include only needed local agents via vaiables  
 - template: src=local-agents/dpkg dest=/usr/lib/observium_agent/local/dpkg owner=root group=root mode=0655  
+
+# apache local agent
+- name: deploy apache local agent
+  template: src=local-agents/apache dest=/usr/lib/observium_agent/local/apache owner=root group=root mode=0655  
+
+- name: deploy apache mod_status configuration
+  template: src=apache_status.conf dest=/etc/apache2/mods-enabled/status.conf owner=root group=root mode=0655  
 
