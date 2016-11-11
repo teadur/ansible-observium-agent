@@ -5,7 +5,7 @@
 # For Observium - Network management and monitoring
 # For Postgres > v8.0, advanced stats for Postgres > v8.3
 
-my $DEBUG=0; # Value greater than 0 sets debug mode. Useful for testing (not for production).
+my $DEBUG=1; # Value greater than 0 sets debug mode. Useful for testing (not for production).
 my $confFile='postgresql.conf';
 
 # --- DO NOT EDIT BENEATH THIS LINE --- #
@@ -85,9 +85,19 @@ $all =~ /\w+ (\d\.\d)/;
 $version=$1;
 
 # get the stats
-if ($version =~ /^[89]\.\d$/) {
+if ($version =~ /^[8]\.\d$/) {
     $cmd="select datname, usename, client_addr, current_query from pg_stat_activity";
 }
+
+if ($version =~ /^(9)\.[0123]$/) {
+     $cmd="select datname, usename, client_addr, current_query from pg_stat_activity";
+}
+
+if ($version =~ /^(9)\.[456]$/) {
+     $cmd="select datname, usename, client_addr, query from pg_stat_activity";
+}
+
+
 
 $all=sqlHashRef($cmd);
 
@@ -123,6 +133,27 @@ for (; $all=$query->fetchrow_hashref() ;) {
 	    $other++;
 	}
     }
+
+     if ($all->{query}) {
+        if ($all->{query} =~ /<IDLE>/) {
+            $idle++;
+        }
+        elsif (lc($all->{query}) =~ /^select/) {
+            $select++;
+        }
+        elsif (lc($all->{query}) =~ /^update/) {
+            $update++;
+        }
+        elsif (lc($all->{query}) =~ /^delete/) {
+            $delete++;
+        }
+        else {
+            $other++;
+        }
+    }
+
+
+    
 }
 
 # To get total number of commits, use query like SELECT SUM(xact_commit) FROM pg_stat_database \
