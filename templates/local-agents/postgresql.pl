@@ -5,7 +5,7 @@
 # For Observium - Network management and monitoring
 # For Postgres > v8.0, advanced stats for Postgres > v8.3
 
-my $DEBUG=1; # Value greater than 0 sets debug mode. Useful for testing (not for production).
+my $DEBUG=0; # Value greater than 0 sets debug mode. Useful for testing (not for production).
 my $confFile='postgresql.conf';
 
 # --- DO NOT EDIT BENEATH THIS LINE --- #
