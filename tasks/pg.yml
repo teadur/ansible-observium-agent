@@ -2,12 +2,16 @@
 # postgresql local agent
 # TODO: separate task file
 - name: install postgres python deps
-  apt: pkg=python-psycopg2 state=installed
-
-- name: deploy postgresql local agent
+  apt: pkg={{ item }} state=installed
+  with_items: 
+  - libdbd-pg-perl
+  - python-psycopg2
+  
+- name: deploy postgresql local agent conf
   template: src=local-agents/postgresql.conf dest=/usr/lib/observium_agent/local/postgresql.conf owner=root group=root mode=0600  
 
-- template: src=local-agents/postgresql.pl dest=/usr/lib/observium_agent/local/postgresql.pl owner=root group=root mode=0655  
+- name: deploy postgresql local-agent
+  template: src=local-agents/postgresql.pl dest=/usr/lib/observium_agent/local/postgresql.pl owner=root group=root mode=0655  
 
 - name: Create a PostgreSQL database user
   postgresql_user: name={{ obs_agent_pg_user }} password={{ obs_agent_pg_pass }} role_attr_flags=CREATEDB state=present
