@@ -5,17 +5,22 @@
   tags: xinetd
   when: ansible_distribution == "Debian"
 
+- name: be sure xinetd is installed
+  yum:  pkg=xinetd state=installed
+  tags: xinetd
+  when: ansible_distribution == "CentOS"
+
 - template: src=observium_agent_xinetd dest=/etc/xinetd.d/observium_agent_xinetd owner=root group=root mode=0644
   notify: restart xinetd
   tags:
   - xinetd
-
+    
+- name: deploy observium agent script
+  template: src=observium_agent dest=/usr/bin/observium_agent owner=root group=root mode=0655
+    
 - name: enable xinetd
   service: name=xinetd state=started
   tags: xinetd
-
-- name: deploy observium agent script
-  template: src=observium_agent dest=/usr/bin/observium_agent owner=root group=root mode=0655
 
 - name: deploy observium distro script
   template: src=distro dest=/usr/bin/distro owner=root group=root mode=0655
