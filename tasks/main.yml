@@ -26,8 +26,8 @@
 
 - file: path=/usr/lib/observium_agent/local state=directory mode=0755
 
-# TODO:  include only needed local agents via variables  
 - template: src=local-agents/dpkg dest=/usr/lib/observium_agent/local/dpkg owner=root group=root mode=0655  
+  when: ansible_distribution == "Debian"
 
 - include: tasks/apache.yml
   when: obs_agent_apache_enable == true
@@ -35,3 +35,5 @@
 - include: tasks/pg.yml
   when: obs_agent_pg_enable == true
 
+- include: tasks/bind.yml
+  when: obs_agent_bind_enable == true

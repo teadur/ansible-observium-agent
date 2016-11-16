@@ -6,6 +6,8 @@ obs_agent_pg_db: pgdb
 obs_agent_pg_host: 127.0.0.1
 obs_agent_pg_enable: false
 obs_agent_apache_enable: false
+obs_agent_bind_stats: "/var/cache/bind/named.stats"
+obs_agent_bind_enable: false
         
         
         

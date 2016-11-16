@@ -1,0 +1,6 @@
+---
+# bind local agent
+- name: deploy bind local agent
+  template: src=local-agents/bind dest=/usr/lib/observium_agent/local/bind owner=root group=root mode=0655  
+
+
