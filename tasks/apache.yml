@@ -7,3 +7,6 @@
 - name: deploy apache mod_status configuration
   template: src=apache_status.conf dest=/etc/apache2/mods-enabled/status.conf owner=root group=root mode=0655  
 
+- name: enable apache mod_status
+  apache2_module: state=present name=status
+
