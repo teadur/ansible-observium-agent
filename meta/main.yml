@@ -1,6 +1,6 @@
 galaxy_info:
   author: Georg Kahest
-  description: Observium-agent
+  description: Role to manage/install Observium agent on Debian
   company: your company (optional)
   license: MIT
   min_ansible_version: 2.2
