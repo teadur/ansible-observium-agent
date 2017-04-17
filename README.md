@@ -3,8 +3,9 @@
 observium-agent
 =========
 
-This role manages observium-agent on Debian based Linux.
-It configures xinetd to run obserivum-agent and deploys defined agent plugins to host.
+This role manages observium-agent on Linux.
+It configures install/configures xinetd to run obserivum-agent and deploys defined agent plugins to host.
+
 
 Requirements
 ------------
@@ -26,10 +27,6 @@ obs_agent_bind_enable: boolean (default false)
 
 All variables can be found in defaults/main.yml
 
-Dependencies
-------------
-
-None
 
 Example Playbook
 ----------------

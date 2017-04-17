@@ -1,6 +1,6 @@
 galaxy_info:
   author: Georg Kahest
-  description: Role to manage/install Observium agent on Debian
+  description: Role to manage/install Observium agent and plugins on Linux
   company: your company (optional)
   license: MIT
   min_ansible_version: 2.2
@@ -105,8 +105,8 @@ galaxy_info:
   #  - 9.1
   #  - 9.2
   #  - 9.3
-  #- name: Ubuntu
-  #  versions:
+  - name: Ubuntu
+    versions:
   #  - all
   #  - lucid
   #  - maverick
@@ -116,11 +116,11 @@ galaxy_info:
   #  - quantal
   #  - raring
   #  - saucy
-  #  - trusty
+    - trusty
   #  - utopic
   #  - vivid
   #  - wily
-  #  - xenial
+    - xenial
   - name: Debian
     versions:
   #  - all
@@ -131,12 +131,12 @@ galaxy_info:
   #  - squeeze
     - stretch
     - wheezy
-  #- name: EL
-  #  versions:
+  - name: EL
+    versions:
   #  - all
   #  - 5
-  #  - 6
-  #  - 7
+    - 6
+    - 7
   #- name: Windows
   #  versions:
   #  - all
