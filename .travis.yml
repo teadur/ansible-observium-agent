@@ -1,6 +1,6 @@
 ---
 language: python
-python: "2.7"
+python: "2.7_with_system_site_packages"
 
 # Use the new container infrastructure
 sudo: required
@@ -13,8 +13,10 @@ addons:
 
 install:
   # Install ansible
+  # - pip install 
+  #- pip install python-apt
   - pip install ansible
-  - pip install https://launchpad.net/ubuntu/+archive/primary/+files/python-apt_1.4.0~beta2.tar.xz
+  # - pip install https://launchpad.net/ubuntu/+archive/primary/+files/python-apt_1.4.0~beta2.tar.xz
 
   # Check ansible version
   - ansible --version
