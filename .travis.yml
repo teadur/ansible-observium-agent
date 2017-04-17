@@ -3,7 +3,7 @@ language: python
 python: "2.7"
 
 # Use the new container infrastructure
-sudo: true
+sudo: required
 
 # Install ansible
 addons:
@@ -24,9 +24,9 @@ install:
 script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - ansible-playbook --sudo -v --diff tests/test.yml
+  - ansible-playbook --connection=local --sudo -v --diff tests/test.yml
   - >
-    ansible-playbook --sudo tests/test.yml
+    ansible-playbook --connection=local --sudo tests/test.yml
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
