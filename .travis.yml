@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
     - python-pip
+    - snmpd
 
 install:
   # Install ansible
