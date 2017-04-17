@@ -8,6 +8,7 @@ Requirements
 ------------
 
 Xinetd running on host ( installed by this role )
+
 SNMP running on host ( only configuration is modified, one oid is added, must be installed by some other role) 
 
 Role Variables
