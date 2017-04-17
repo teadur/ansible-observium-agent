@@ -10,11 +10,11 @@ addons:
   apt:
     packages:
     - python-pip
-    - python-apt
 
 install:
   # Install ansible
   - pip install ansible
+  - pip install apt
 
   # Check ansible version
   - ansible --version
