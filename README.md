@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/teadur/ansible-observium-agent.svg?branch=master)](https://travis-ci.org/teadur/ansible-observium-agent)
+
 observium-agent
 =========
 
@@ -14,9 +16,12 @@ SNMP running on host ( only configuration is modified, one oid is added, must be
 Role Variables
 --------------
 
-observium_host: host running observium ( defaults to 127.0.0.1 ) 
+observium_host: host running observium ( defaults to 127.0.0.1 )
+ 
 obs_agent_pg_enable: boolean (default false)
+
 obs_agent_apache_enable: boolean (default false)
+
 obs_agent_bind_enable: boolean (default false)
 
 All variables can be found in defaults/main.yml
