@@ -24,20 +24,26 @@ before_install:
 
 script:
  # Create a random file to store the container ID.
-  - container_id=$(mktemp)
+ #- container_id=$(mktemp)
 
   # Run container detached, with our role mounted inside.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-observium-agent:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-observium-agent:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Basic role syntax check
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook --connection=local --sudo -v --diff tests/test.yml
-  - >
-    docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook --connection=local --sudo tests/test.yml
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook --connection=local --sudo -v --diff tests/test.yml
+  # - >
+  #   docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook --connection=local --sudo tests/test.yml
+  #  | grep -q 'changed=0.*failed=0'
+  #  && (echo 'Idempotence test: pass' && exit 0)
+  #  || (echo 'Idempotence test: fail' && exit 1)
 
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
+
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
