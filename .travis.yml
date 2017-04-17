@@ -39,7 +39,7 @@ script:
   #  || (echo 'Idempotence test: fail' && exit 1)
 
   # Download test shim.
-        - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/teadur/35818c6a66aa7c36a1c91b40c0e2275e/raw/e00d7f388d1c62095ac2f799c781418591f1d5f7/test.sh.generator
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/teadur/35818c6a66aa7c36a1c91b40c0e2275e/raw/e00d7f388d1c62095ac2f799c781418591f1d5f7/test.sh.generator
   - chmod +x ${PWD}/tests/test.sh
 
   # Run tests.
