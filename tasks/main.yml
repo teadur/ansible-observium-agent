@@ -42,3 +42,6 @@
 
 - include: tasks/bind.yml
   when: obs_agent_bind_enable == true
+
+- include: tasks/postfix.yml
+  when: obs_agent_postfix_enable == true

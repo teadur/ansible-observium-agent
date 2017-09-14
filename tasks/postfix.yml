@@ -1,0 +1,14 @@
+---
+# postfix mailgraph local agent
+# TODO: consider modification of /usr/sbin/mailgraph from $rrdstep = 60 to my $rrdstep = 300; in this script, 
+# requires cleanup of old rrds and restart to mailgraph after
+# http://docs.observium.org/apps/#postfix-mailgraph
+- name: be sure rrdtool is installed
+  apt:  pkg=rrdtool state=installed
+  tags: rrdtool
+
+  when: ansible_distribution == "Debian"  
+- name: deploy mailgraph local agent
+  copy: src=templates/local-agents/postfix_mailgraph dest=/usr/lib/observium_agent/local/postfix_mailgraph owner=root group=root mode=0655  
+
+
