@@ -1,29 +1,51 @@
 ---
 language: python
-python: "2.7"
+python: "2.7_with_system_site_packages"
 
 # Use the new container infrastructure
-sudo: false
+sudo: required
+env:
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: ubuntu1404
+  - distro: centos6
 
-# Install ansible
-addons:
-  apt:
-    packages:
-    - python-pip
+services:
+   - docker
+before_install:
+ # Pull container from Docker Hub.
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
-install:
-  # Install ansible
-  - pip install ansible
-
-  # Check ansible version
-  - ansible --version
-
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
 
 script:
+ # Create a random file to store the container ID.
+ #- container_id=$(mktemp)
+
+  # Run container detached, with our role mounted inside.
+  # - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-observium-agent:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+
   # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook --connection=local --sudo -v --diff tests/test.yml
+  # - >
+  #   docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook --connection=local --sudo tests/test.yml
+  #  | grep -q 'changed=0.*failed=0'
+  #  && (echo 'Idempotence test: pass' && exit 0)
+  #  || (echo 'Idempotence test: fail' && exit 1)
+
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/teadur/35818c6a66aa7c36a1c91b40c0e2275e/raw/
+  - chmod +x ${PWD}/tests/test.sh
+
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
