@@ -9,7 +9,8 @@ obs_agent_pg_enable: false
 obs_agent_apache_enable: false
 obs_agent_bind_stats: "/var/cache/bind/named.stats"
 obs_agent_bind_enable: false
-obs_agent_postfix_enable: false        
+obs_agent_postfix_enable: false
+obs_agent_vmwaretools_enable: false
         
         
         

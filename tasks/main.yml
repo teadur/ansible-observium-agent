@@ -45,3 +45,6 @@
 
 - include: tasks/postfix.yml
   when: obs_agent_postfix_enable == true
+
+- include: tasks/vmwaretools.yml
+  when: obs_agent_vmwaretools_enable == true
