@@ -1,0 +1,6 @@
+---
+# vmwaretools / open-vm-tools local agent
+- name: deploy vm-tools local agent
+  template: src=local-agents/vmwaretools dest=/usr/lib/observium_agent/local/vmwaretools owner=root group=root mode=0655  
+
+
