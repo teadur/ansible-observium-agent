@@ -1,12 +1,12 @@
 ---
 # tasks file for observium-agent
 - name: be sure xinetd is installed
-  apt:  pkg=xinetd state=installed
+  apt:  pkg=xinetd state=present
   tags: xinetd
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: be sure xinetd is installed
-  yum:  pkg=xinetd state=installed
+  yum:  pkg=xinetd state=present
   tags: xinetd
   when: ansible_distribution == "CentOS"
 
@@ -46,5 +46,5 @@
 - include: tasks/postfix.yml
   when: obs_agent_postfix_enable == true
 
-- include: tasks/vmwaretools.yml
-  when: obs_agent_vmwaretools_enable == true
+#- include: tasks/vmwaretools.yml
+#  when: obs_agent_vmwaretools_enable == true
