@@ -1,0 +1,14 @@
+- name: "adding device {{ inventory_hostname }} to {{ observium_host }} inventory"
+  shell: "{{ item }}"
+  args:
+    chdir: /opt/observium
+  delegate_to: "{{ observium_host }}"
+  become_user: www-data
+  #debug: on-failure
+  register: observium
+  with_items:
+      - php ./add_device.php "{{ inventory_hostname }}"
+      - php ./discovery.php -h "{{ inventory_hostname }}"
+
+- debug:
+    var: observium

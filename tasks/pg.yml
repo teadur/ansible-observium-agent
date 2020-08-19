@@ -2,7 +2,7 @@
 # postgresql local agent
 # TODO: separate task file
 - name: install postgres python deps
-  apt: pkg={{ item }} state=installed
+  apt: pkg={{ item }} state=latest
   with_items: 
   - libdbd-pg-perl
   - python-psycopg2
@@ -23,5 +23,3 @@
   postgresql_db: name={{ obs_agent_pg_db }} owner={{ obs_agent_pg_user }}
   become: yes
   become_user: postgres
-  become_method: sudo
-  

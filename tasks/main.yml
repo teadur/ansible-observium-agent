@@ -48,3 +48,5 @@
 
 #- include: tasks/vmwaretools.yml
 #  when: obs_agent_vmwaretools_enable == true
+- include: tasks/add_host.yml
+
